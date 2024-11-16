@@ -59,20 +59,22 @@
             // ClassComb
             // 
             ClassComb.DropDownStyle = ComboBoxStyle.DropDownList;
+            ClassComb.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);
             ClassComb.FormattingEnabled = true;
             ClassComb.Location = new Point(81, 148);
             ClassComb.Name = "ClassComb";
-            ClassComb.Size = new Size(678, 33);
+            ClassComb.Size = new Size(678, 46);
             ClassComb.TabIndex = 1;
             ClassComb.SelectedIndexChanged += ClassComb_SelectedIndexChanged;
             // 
             // SpecComb
             // 
             SpecComb.DropDownStyle = ComboBoxStyle.DropDownList;
+            SpecComb.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);
             SpecComb.FormattingEnabled = true;
             SpecComb.Location = new Point(81, 306);
             SpecComb.Name = "SpecComb";
-            SpecComb.Size = new Size(678, 33);
+            SpecComb.Size = new Size(678, 46);
             SpecComb.TabIndex = 2;
             // 
             // Add
@@ -90,19 +92,21 @@
             // 
             // Num
             // 
+            Num.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);
             Num.Location = new Point(81, 575);
             Num.Name = "Num";
-            Num.Size = new Size(678, 31);
+            Num.Size = new Size(678, 45);
             Num.TabIndex = 4;
             // 
             // BehavComb
             // 
             BehavComb.DropDownStyle = ComboBoxStyle.DropDownList;
+            BehavComb.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);
             BehavComb.FormattingEnabled = true;
             BehavComb.Items.AddRange(new object[] { "питается", "охотится", "паразитирует", "бездействует" });
             BehavComb.Location = new Point(81, 433);
             BehavComb.Name = "BehavComb";
-            BehavComb.Size = new Size(678, 33);
+            BehavComb.Size = new Size(678, 46);
             BehavComb.TabIndex = 5;
             // 
             // Zone

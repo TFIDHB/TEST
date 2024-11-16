@@ -7,7 +7,7 @@ namespace Я_так_больше_не_могу
 {
     public partial class Form1 : Form
     {
-        private List<Animal> animals = new List<Animal>();
+        private List<World> animals = new List<World>();
 
         public Form1(string selectedZone)
         {
@@ -69,7 +69,7 @@ namespace Я_так_больше_не_могу
                 string selectedValue = SpecComb.SelectedItem.ToString();
                 string selectedBehav = BehavComb.SelectedItem.ToString();
 
-                Animal newAnimal = null;
+                World newAnimal = null;
 
                 if (selectedClass == "Хищник")
                 {

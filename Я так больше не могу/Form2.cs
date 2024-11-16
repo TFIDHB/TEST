@@ -13,25 +13,24 @@ namespace Я_так_больше_не_могу
 {
     public partial class Form2 : Form
     {
-
         public Form2()
         {
             InitializeComponent();
-
         }
 
         private void Start_Click(object sender, EventArgs e)
         {
-            string selectedZone = ZoneComb.SelectedItem.ToString();
-            if (selectedZone == null)
+            if (ZoneComb.SelectedItem == null)
             {
                 MessageBox.Show("Пожалуйста, выберите зону!");
                 return;
             }
 
-            Form form = new Form1(selectedZone);
-            form.ShowDialog();
-            Hide();
+            string selectedZone = ZoneComb.SelectedItem.ToString();
+            Form1 form1 = new Form1(selectedZone);
+            form1.FormClosed += (s, args) => this.Show(); // Показать Form2 при закрытии Form1
+            this.Hide();
+            form1.Show();
         }
     }
 }

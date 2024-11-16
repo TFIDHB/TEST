@@ -3,31 +3,26 @@ using System.Collections.Generic;
 
 namespace Я_так_больше_не_могу
 {
-    public abstract class Animal
+    public abstract class World
     {
         public string Name { get; set; }
         public int Amount { get; set; }
         public string Behavior { get; set; }
 
-        public Animal(string name, int amount, string behavior)
+        public World(string name, int amount, string behavior)
         {
             Name = name;
             Amount = amount;
             Behavior = behavior;
         }
 
-        public virtual void Speak(List<Animal> animals)
+        public virtual void Speak(List<World> animals)
         {
-
             if (Behavior == "охотится")
             {
                 Console.WriteLine($"{Name} рычит.");
             }
 
-            else if (Behavior == "ест")
-            {
-                Console.WriteLine($"{Name} ест.");
-            }
             else
             {
                 Console.WriteLine($"{Name} издает звук.");
@@ -35,16 +30,15 @@ namespace Я_так_больше_не_могу
         }
     }
 
-    public class Predator : Animal
+    public class Predator : World
     {
         public Predator(string name, int amount, string behavior) : base(name, amount, behavior) { }
 
         public static string[] PredatorNames = { "Волк", "Лиса", "Медведь" };
 
-        public override void Speak(List<Animal> animals)
+        public override void Speak(List<World> animals)
         {
-            base.Speak(animals);
-            if (Behavior == "охотится")
+            if (Behavior == "охотится" && Name != "Медведь")
             {
                 foreach (var animal in animals)
                 {
@@ -70,6 +64,22 @@ namespace Я_так_больше_не_могу
                     }
                 }
             }
+            else if (Behavior == "питается")
+            {
+                foreach (var animal in animals)
+                {
+                    if ((animal is Plant || animal is Insect) && animal.Amount > 0 && Amount > 0)
+                    {
+                        int preyAmount = new Random().Next(1, Amount + 1);
+                        int eaten = Math.Min(preyAmount, animal.Amount);
+
+                        animal.Amount -= eaten;
+                        Amount += eaten;
+
+                        Console.WriteLine($"{Name} питается {animal.Name}. Количество {animal.Name}: {animal.Amount}");
+                    }
+                }
+            }
             else
             {
                 Console.WriteLine($"Поведение {Behavior} невозможно в данном контексте");
@@ -77,13 +87,13 @@ namespace Я_так_больше_не_могу
         }
     }
 
-    public class Herbivore : Animal
+    public class Herbivore : World
     {
         public Herbivore(string name, int amount, string behavior) : base(name, amount, behavior) { }
 
         public static string[] HerbivoreNames = { "Олень", "Заяц", "Лось" };
 
-        public override void Speak(List<Animal> animals)
+        public override void Speak(List<World> animals)
         {
             if (Behavior == "питается")
             {
@@ -115,31 +125,34 @@ namespace Я_так_больше_не_могу
         }
     }
 
-    public class Plant : Animal
+    public class Plant : World
     {
         public Plant(string name, int amount, string behavior) : base(name, amount, behavior) { }
 
         public static string[] PlantNames = { "Берёза", "Ромашка", "Трава" };
 
-        public override void Speak(List<Animal> animals)
+        public override void Speak(List<World> animals)
         {
             Console.WriteLine($"{Name} бездействует");
         }
     }
 
-    public class Insect : Animal
+    public class Insect : World
     {
         public Insect(string name, int amount, string behavior) : base(name, amount, behavior) { }
 
         public static string[] InsectNames = { "Пчела", "Клещ", "Муравей" };
 
-        public override void Speak(List<Animal> animals)
+        public override void Speak(List<World> animals)
         {
-            if (Behavior == "паразитирует" && Name == "Клещ")
+            if (Behavior == "паразитирует" && Name == "Клещ" && Amount > 0)
             {
+                Random rnd = new Random();
+                bool parasiteOnPredator = rnd.Next(0, 2) == 0;
+
                 foreach (var animal in animals)
                 {
-                    if (animal is Herbivore && animal.Amount > 0 )
+                    if ((animal is Herbivore || (animal is Predator && parasiteOnPredator)) && animal.Amount > 0)
                     {
                         int preyAmount = new Random().Next(1, Amount + 1);
                         int parasitized = Math.Min(preyAmount, animal.Amount);
@@ -151,7 +164,7 @@ namespace Я_так_больше_не_могу
                     }
                 }
             }
-            else if (Behavior == "питается" && Name != "Клещ")
+            else if (Behavior == "питается" && Name != "Клещ" && Name != "Муравей" && Amount > 0)
             {
                 foreach (var animal in animals)
                 {
@@ -167,11 +180,20 @@ namespace Я_так_больше_не_могу
                     }
                 }
             }
+            else if (Behavior == "питается" && Name == "Муравей" && Amount > 0)
+            {
+                foreach (var animal in animals)
+                {
+                    if (animal is World && animal.Amount <= 0)
+                    {
+                        Console.WriteLine($"{Name} разлагает {animal.Name}");
+                    }
+                }
+            }
             else
             {
                 Console.WriteLine($"Поведение {Behavior} невозможно в данном контексте");
             }
         }
-
     }
 }
