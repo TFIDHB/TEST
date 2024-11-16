@@ -9,10 +9,30 @@ namespace Я_так_больше_не_могу
     {
         private List<Animal> animals = new List<Animal>();
 
-        public Form1()
+        public Form1(string selectedZone)
         {
             InitializeComponent();
+            AllocConsole();
+            SetZoneBackground(selectedZone);
         }
+
+        private void SetZoneBackground(string zoneName)
+        {
+            string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Зоны", $"{zoneName}.jpg");
+
+            if (File.Exists(imagePath))
+            {
+                Zone.BackgroundImage = Image.FromFile(imagePath);
+                Zone.BackgroundImageLayout = ImageLayout.Stretch;
+            }
+            else
+            {
+                Zone.BackgroundImage = null;
+                Console.WriteLine($"Изображение для {zoneName} не найдено.");
+            }
+        }
+
+
 
         private void Start_Click_1(object sender, EventArgs e)
         {
@@ -24,7 +44,7 @@ namespace Я_так_больше_не_могу
 
         private void Form1_Load_1(object sender, EventArgs e)
         {
-            AllocConsole();
+            
             FillComboBoxes();
         }
 
