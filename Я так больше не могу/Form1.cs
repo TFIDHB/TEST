@@ -18,7 +18,7 @@ namespace Я_так_больше_не_могу
         {
             foreach (var animal in animals)
             {
-                animal.Speak();
+                animal.Speak(animals);
             }
         }
 
@@ -33,6 +33,8 @@ namespace Я_так_больше_не_могу
             ClassComb.Items.Clear();
             ClassComb.Items.Add("Хищник");
             ClassComb.Items.Add("Травоядное");
+            ClassComb.Items.Add("Растение");
+            ClassComb.Items.Add("Насекомое");
         }
 
         [DllImport("kernel32.dll", SetLastError = true)]
@@ -45,22 +47,33 @@ namespace Я_так_больше_не_могу
             {
                 string selectedClass = ClassComb.SelectedItem.ToString();
                 string selectedValue = SpecComb.SelectedItem.ToString();
+                string selectedBehav = BehavComb.SelectedItem.ToString();
 
                 Animal newAnimal = null;
 
                 if (selectedClass == "Хищник")
                 {
-                    newAnimal = new Predator(selectedValue, (int)Num.Value, "охотится");
+                    newAnimal = new Predator(selectedValue, (int)Num.Value, selectedBehav);
                 }
                 else if (selectedClass == "Травоядное")
                 {
-                    newAnimal = new Herbivore(selectedValue, (int)Num.Value, "ест");
+                    newAnimal = new Herbivore(selectedValue, (int)Num.Value, selectedBehav);
+                }
+
+                else if (selectedClass == "Растение")
+                {
+                    newAnimal = new Plant(selectedValue, (int)Num.Value, selectedBehav);
+                }
+
+                else if (selectedClass == "Насекомое")
+                {
+                    newAnimal = new Insect(selectedValue, (int)Num.Value, selectedBehav);
                 }
 
                 if (newAnimal != null)
                 {
                     animals.Add(newAnimal);
-                    Console.WriteLine($"Добавлен объект: {newAnimal.Name}, {(int)Num.Value}");
+                    Console.WriteLine($"Добавлен объект: {newAnimal.Name}, количество: {(int)Num.Value}");
                 }
             }
         }
@@ -78,9 +91,16 @@ namespace Я_так_больше_не_могу
             {
                 SpecComb.Items.AddRange(Herbivore.HerbivoreNames);
             }
+
+            else if (selectedClass == "Растение")
+            {
+                SpecComb.Items.AddRange(Plant.PlantNames);
+            }
+
+            else if (selectedClass == "Насекомое")
+            {
+                SpecComb.Items.AddRange(Insect.InsectNames);
+            }
         }
     }
-
 }
-
-
