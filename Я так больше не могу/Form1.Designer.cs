@@ -34,13 +34,12 @@
             Add = new Button();
             Num = new NumericUpDown();
             BehavComb = new ComboBox();
-            Zone = new PictureBox();
             ClassLabel = new Label();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
+            PanelBackground = new Panel();
             ((System.ComponentModel.ISupportInitialize)Num).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Zone).BeginInit();
             SuspendLayout();
             // 
             // Start
@@ -109,14 +108,6 @@
             BehavComb.Size = new Size(678, 46);
             BehavComb.TabIndex = 5;
             // 
-            // Zone
-            // 
-            Zone.Location = new Point(880, 31);
-            Zone.Name = "Zone";
-            Zone.Size = new Size(963, 806);
-            Zone.TabIndex = 6;
-            Zone.TabStop = false;
-            // 
             // ClassLabel
             // 
             ClassLabel.AutoSize = true;
@@ -157,17 +148,24 @@
             label3.TabIndex = 10;
             label3.Text = "Количество";
             // 
+            // PanelBackground
+            // 
+            PanelBackground.Location = new Point(855, 44);
+            PanelBackground.Name = "PanelBackground";
+            PanelBackground.Size = new Size(993, 791);
+            PanelBackground.TabIndex = 11;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.PapayaWhip;
             ClientSize = new Size(1878, 874);
+            Controls.Add(PanelBackground);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(ClassLabel);
-            Controls.Add(Zone);
             Controls.Add(BehavComb);
             Controls.Add(Num);
             Controls.Add(Add);
@@ -178,7 +176,6 @@
             Text = "Form1";
             Load += Form1_Load_1;
             ((System.ComponentModel.ISupportInitialize)Num).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Zone).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -191,10 +188,10 @@
         private Button Add;
         private NumericUpDown Num;
         private ComboBox BehavComb;
-        private PictureBox Zone;
         private Label ClassLabel;
         private Label label1;
         private Label label2;
         private Label label3;
+        private Panel PanelBackground;
     }
 }

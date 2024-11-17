@@ -24,15 +24,17 @@ namespace Я_так_больше_не_могу
 
             if (File.Exists(imagePath))
             {
-                Zone.BackgroundImage = Image.FromFile(imagePath);
-                Zone.BackgroundImageLayout = ImageLayout.Stretch;
+                PanelBackground.BackgroundImage = Image.FromFile(imagePath);
+                PanelBackground.BackgroundImageLayout = ImageLayout.Stretch;
+                PanelBackground.BackColor = Color.Transparent;
             }
             else
             {
-                Zone.BackgroundImage = null;
+                PanelBackground.BackgroundImage = null;
                 Console.WriteLine($"Изображение для {zoneName} не найдено.");
             }
         }
+
 
         private void Start_Click_1(object sender, EventArgs e)
         {
@@ -102,25 +104,30 @@ namespace Я_так_больше_не_могу
 
             if (File.Exists(imagePath))
             {
-                PictureBox animalPictureBox = new PictureBox
+                using (Bitmap bitmap = new Bitmap(imagePath))
                 {
-                    Image = Image.FromFile(imagePath),
-                    SizeMode = PictureBoxSizeMode.AutoSize,
-                    Location = new Point(
-                        random.Next(880, this.Width - 100),
-                        random.Next(31, this.Height - 100)
-                    ),
-                    BackColor = Color.Transparent
-                };
+                    PictureBox animalPictureBox = new PictureBox
+                    {
+                        Image = new Bitmap(bitmap),
+                        SizeMode = PictureBoxSizeMode.AutoSize,
+                        Location = new Point(
+                            random.Next(0, PanelBackground.Width - bitmap.Width), 
+                            random.Next(0, PanelBackground.Height - bitmap.Height)
+                        ),
+                        BackColor = Color.Transparent,
+                        Parent = PanelBackground
+                    };
 
-                this.Controls.Add(animalPictureBox);
-                animalPictureBox.BringToFront();
+                    PanelBackground.Controls.Add(animalPictureBox);
+                    animalPictureBox.BringToFront();
+                }
             }
             else
             {
                 Console.WriteLine($"Изображение для {animalName} не найдено.");
             }
         }
+
 
         private void ClassComb_SelectedIndexChanged(object sender, EventArgs e)
         {
