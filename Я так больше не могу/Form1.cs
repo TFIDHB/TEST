@@ -35,6 +35,35 @@ namespace Я_так_больше_не_могу
             }
         }
 
+        private void AddAnimalImage(string animalName)
+        {
+            string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Животные", $"{animalName}.png");
+
+            if (File.Exists(imagePath))
+            {
+                using (Bitmap bitmap = new Bitmap(imagePath))
+                {
+                    PictureBox animalPictureBox = new PictureBox
+                    {
+                        Image = new Bitmap(bitmap),
+                        SizeMode = PictureBoxSizeMode.AutoSize,
+                        Location = new Point(
+                            random.Next(0, PanelBackground.Width - bitmap.Width),
+                            random.Next(0, PanelBackground.Height - bitmap.Height)
+                        ),
+                        BackColor = Color.Transparent,
+                        Parent = PanelBackground
+                    };
+
+                    PanelBackground.Controls.Add(animalPictureBox);
+                    animalPictureBox.BringToFront();
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Изображение для {animalName} не найдено.");
+            }
+        }
 
         private void Start_Click_1(object sender, EventArgs e)
         {
@@ -64,70 +93,43 @@ namespace Я_так_больше_не_могу
 
         private void Add_Click(object sender, EventArgs e)
         {
-            if (SpecComb.SelectedItem != null && ClassComb.SelectedItem != null)
+            // Проверяем, заполнены ли все поля
+            if (SpecComb.SelectedItem == null || ClassComb.SelectedItem == null || BehavComb.SelectedItem == null || Num.Value <= 0)
             {
-                string selectedClass = ClassComb.SelectedItem.ToString();
-                string selectedValue = SpecComb.SelectedItem.ToString();
-                string selectedBehav = BehavComb.SelectedItem.ToString();
+                MessageBox.Show("Пожалуйста, введите полные данные для добавления объекта!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-                World newAnimal = null;
+            string selectedClass = ClassComb.SelectedItem.ToString();
+            string selectedValue = SpecComb.SelectedItem.ToString();
+            string selectedBehav = BehavComb.SelectedItem.ToString();
 
-                if (selectedClass == "Хищник")
-                {
-                    newAnimal = new Predator(selectedValue, (int)Num.Value, selectedBehav);
-                }
-                else if (selectedClass == "Травоядное")
-                {
-                    newAnimal = new Herbivore(selectedValue, (int)Num.Value, selectedBehav);
-                }
-                else if (selectedClass == "Растение")
-                {
-                    newAnimal = new Plant(selectedValue, (int)Num.Value, selectedBehav);
-                }
-                else if (selectedClass == "Насекомое")
-                {
-                    newAnimal = new Insect(selectedValue, (int)Num.Value, selectedBehav);
-                }
+            World newAnimal = null;
 
-                if (newAnimal != null)
-                {
-                    animals.Add(newAnimal);
-                    AddAnimalImage(newAnimal.Name);
-                    Console.WriteLine($"Добавлен объект: {newAnimal.Name}, количество: {(int)Num.Value}");
-                }
+            if (selectedClass == "Хищник")
+            {
+                newAnimal = new Predator(selectedValue, (int)Num.Value, selectedBehav);
+            }
+            else if (selectedClass == "Травоядное")
+            {
+                newAnimal = new Herbivore(selectedValue, (int)Num.Value, selectedBehav);
+            }
+            else if (selectedClass == "Растение")
+            {
+                newAnimal = new Plant(selectedValue, (int)Num.Value, selectedBehav);
+            }
+            else if (selectedClass == "Насекомое")
+            {
+                newAnimal = new Insect(selectedValue, (int)Num.Value, selectedBehav);
+            }
+
+            if (newAnimal != null)
+            {
+                animals.Add(newAnimal);
+                AddAnimalImage(newAnimal.Name);
+                Console.WriteLine($"Добавлен объект: {newAnimal.Name}, количество: {(int)Num.Value}");
             }
         }
-
-        private void AddAnimalImage(string animalName)
-        {
-            string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Животные", $"{animalName}.png");
-
-            if (File.Exists(imagePath))
-            {
-                using (Bitmap bitmap = new Bitmap(imagePath))
-                {
-                    PictureBox animalPictureBox = new PictureBox
-                    {
-                        Image = new Bitmap(bitmap),
-                        SizeMode = PictureBoxSizeMode.AutoSize,
-                        Location = new Point(
-                            random.Next(0, PanelBackground.Width - bitmap.Width), 
-                            random.Next(0, PanelBackground.Height - bitmap.Height)
-                        ),
-                        BackColor = Color.Transparent,
-                        Parent = PanelBackground
-                    };
-
-                    PanelBackground.Controls.Add(animalPictureBox);
-                    animalPictureBox.BringToFront();
-                }
-            }
-            else
-            {
-                Console.WriteLine($"Изображение для {animalName} не найдено.");
-            }
-        }
-
 
         private void ClassComb_SelectedIndexChanged(object sender, EventArgs e)
         {
