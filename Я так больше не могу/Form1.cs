@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -8,6 +9,7 @@ namespace Я_так_больше_не_могу
     public partial class Form1 : Form
     {
         private List<World> animals = new List<World>();
+        private Random random = new Random();
 
         public Form1(string selectedZone)
         {
@@ -32,8 +34,6 @@ namespace Я_так_больше_не_могу
             }
         }
 
-
-
         private void Start_Click_1(object sender, EventArgs e)
         {
             foreach (var animal in animals)
@@ -44,7 +44,6 @@ namespace Я_так_больше_не_могу
 
         private void Form1_Load_1(object sender, EventArgs e)
         {
-            
             FillComboBoxes();
         }
 
@@ -79,12 +78,10 @@ namespace Я_так_больше_не_могу
                 {
                     newAnimal = new Herbivore(selectedValue, (int)Num.Value, selectedBehav);
                 }
-
                 else if (selectedClass == "Растение")
                 {
                     newAnimal = new Plant(selectedValue, (int)Num.Value, selectedBehav);
                 }
-
                 else if (selectedClass == "Насекомое")
                 {
                     newAnimal = new Insect(selectedValue, (int)Num.Value, selectedBehav);
@@ -93,8 +90,35 @@ namespace Я_так_больше_не_могу
                 if (newAnimal != null)
                 {
                     animals.Add(newAnimal);
+                    AddAnimalImage(newAnimal.Name);
                     Console.WriteLine($"Добавлен объект: {newAnimal.Name}, количество: {(int)Num.Value}");
                 }
+            }
+        }
+
+        private void AddAnimalImage(string animalName)
+        {
+            string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Животные", $"{animalName}.png");
+
+            if (File.Exists(imagePath))
+            {
+                PictureBox animalPictureBox = new PictureBox
+                {
+                    Image = Image.FromFile(imagePath),
+                    SizeMode = PictureBoxSizeMode.AutoSize,
+                    Location = new Point(
+                        random.Next(880, this.Width - 100),
+                        random.Next(31, this.Height - 100)
+                    ),
+                    BackColor = Color.Transparent
+                };
+
+                this.Controls.Add(animalPictureBox);
+                animalPictureBox.BringToFront();
+            }
+            else
+            {
+                Console.WriteLine($"Изображение для {animalName} не найдено.");
             }
         }
 
@@ -111,12 +135,10 @@ namespace Я_так_больше_не_могу
             {
                 SpecComb.Items.AddRange(Herbivore.HerbivoreNames);
             }
-
             else if (selectedClass == "Растение")
             {
                 SpecComb.Items.AddRange(Plant.PlantNames);
             }
-
             else if (selectedClass == "Насекомое")
             {
                 SpecComb.Items.AddRange(Insect.InsectNames);
