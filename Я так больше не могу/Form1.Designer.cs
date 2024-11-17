@@ -102,7 +102,7 @@
             BehavComb.DropDownStyle = ComboBoxStyle.DropDownList;
             BehavComb.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);
             BehavComb.FormattingEnabled = true;
-            BehavComb.Items.AddRange(new object[] { "питается", "охотится", "паразитирует", "бездействует" });
+            BehavComb.Items.AddRange(new object[] { "питается", "охотится", "бездействует" });
             BehavComb.Location = new Point(81, 433);
             BehavComb.Name = "BehavComb";
             BehavComb.Size = new Size(678, 46);

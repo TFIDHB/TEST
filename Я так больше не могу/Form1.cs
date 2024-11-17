@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -10,6 +11,7 @@ namespace Я_так_больше_не_могу
     {
         private List<World> animals = new List<World>();
         private Random random = new Random();
+        private List<Rectangle> animalPositions = new List<Rectangle>();
 
         public Form1(string selectedZone)
         {
@@ -35,7 +37,7 @@ namespace Я_так_больше_не_могу
             }
         }
 
-        private void AddAnimalImage(string animalName)
+        private void AddAnimalImage(string animalName, int count)
         {
             string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Животные", $"{animalName}.png");
 
@@ -47,16 +49,18 @@ namespace Я_так_больше_не_могу
                     {
                         Image = new Bitmap(bitmap),
                         SizeMode = PictureBoxSizeMode.AutoSize,
-                        Location = new Point(
-                            random.Next(0, PanelBackground.Width - bitmap.Width),
-                            random.Next(0, PanelBackground.Height - bitmap.Height)
-                        ),
                         BackColor = Color.Transparent,
                         Parent = PanelBackground
                     };
 
+                    Point location = GetNonOverlappingLocation(bitmap.Width, bitmap.Height);
+                    animalPictureBox.Location = location;
+
+                    animalPositions.Add(new Rectangle(location, bitmap.Size));
                     PanelBackground.Controls.Add(animalPictureBox);
                     animalPictureBox.BringToFront();
+
+                    AddAnimalLabel(animalPictureBox, animalName, count);
                 }
             }
             else
@@ -65,13 +69,80 @@ namespace Я_так_больше_не_могу
             }
         }
 
+
+        private Point GetNonOverlappingLocation(int width, int height)
+        {
+            Point location;
+            Rectangle newRect;
+            int attempts = 0;
+            do
+            {
+                location = new Point(
+                    random.Next(0, PanelBackground.Width - width),
+                    random.Next(0, PanelBackground.Height - height)
+                );
+                newRect = new Rectangle(location, new Size(width, height));
+                attempts++;
+            } while (IsOverlapping(newRect) && attempts < 100);
+
+            return location;
+        }
+
+        private bool IsOverlapping(Rectangle newRect)
+        {
+            foreach (Rectangle rect in animalPositions)
+            {
+                if (rect.IntersectsWith(newRect))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void AddAnimalLabel(PictureBox animalPictureBox, string animalName, int count)
+        {
+            Label animalLabel = new Label
+            {
+                Text = $"{animalName}: {count}",
+                Name = $"animalLabel_{animalName}_{random.Next()}",
+                BackColor = Color.Yellow,
+                AutoSize = true,
+                Location = new Point(animalPictureBox.Left, animalPictureBox.Bottom + 5)
+            };
+
+            PanelBackground.Controls.Add(animalLabel);
+            animalLabel.BringToFront();
+        }
+
+
+
         private void Start_Click_1(object sender, EventArgs e)
         {
             foreach (var animal in animals)
             {
                 animal.Speak(animals);
             }
+
+            UpdateAnimalLabels();
         }
+
+        private void UpdateAnimalLabels()
+        {
+            foreach (Control control in PanelBackground.Controls)
+            {
+                if (control is Label label && label.Name.StartsWith("animalLabel_"))
+                {
+                    string animalName = label.Name.Split('_')[1]; // Изменено на корректное извлечение имени животного
+                    World animal = animals.Find(a => a.Name == animalName);
+                    if (animal != null)
+                    {
+                        label.Text = $"{animal.Name}: {animal.Amount}";
+                    }
+                }
+            }
+        }
+
 
         private void Form1_Load_1(object sender, EventArgs e)
         {
@@ -126,10 +197,11 @@ namespace Я_так_больше_не_могу
             if (newAnimal != null)
             {
                 animals.Add(newAnimal);
-                AddAnimalImage(newAnimal.Name);
+                AddAnimalImage(newAnimal.Name, newAnimal.Amount);
                 Console.WriteLine($"Добавлен объект: {newAnimal.Name}, количество: {(int)Num.Value}");
             }
         }
+
 
         private void ClassComb_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -155,3 +227,5 @@ namespace Я_так_больше_не_могу
         }
     }
 }
+
+

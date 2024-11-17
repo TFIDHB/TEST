@@ -145,7 +145,7 @@ namespace Я_так_больше_не_могу
 
         public override void Speak(List<World> animals)
         {
-            if (Behavior == "паразитирует" && Name == "Клещ" && Amount > 0)
+            if (Behavior == "питается" && Name == "Клещ" && Amount > 0)
             {
                 Random rnd = new Random();
                 bool parasiteOnPredator = rnd.Next(0, 2) == 0;
