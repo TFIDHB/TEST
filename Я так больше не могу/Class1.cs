@@ -35,7 +35,9 @@ namespace Я_так_больше_не_могу
     {
         public Predator(string name, int amount, string behavior) : base(name, amount, behavior) { }
 
-        public static string[] PredatorNames = { "Волк", "Лиса", "Медведь" };
+        public static string[] PredatorNames1 = { "Волк", "Лиса", "Медведь" };
+        public static string[] PredatorNames2 = { "Лиса", "Ястреб", "Хорёк" };
+        public static string[] PredatorNames3 = { "Змея", "Жаба", "Выдра" };
 
         public override void Speak(List<World> animals)
         {
@@ -96,7 +98,9 @@ namespace Я_так_больше_не_могу
     {
         public Herbivore(string name, int amount, string behavior) : base(name, amount, behavior) { }
 
-        public static string[] HerbivoreNames = { "Олень", "Заяц", "Лось" };
+        public static string[] HerbivoreNames1 = { "Олень", "Заяц", "Лось" };
+        public static string[] HerbivoreNames2 = { "Белка", "Кролик", "Мышь" };
+        public static string[] HerbivoreNames3 = { "Ондатра", "Мышь", "Бобр" };
 
         public override void Speak(List<World> animals)
         {
@@ -136,7 +140,9 @@ namespace Я_так_больше_не_могу
     {
         public Plant(string name, int amount, string behavior) : base(name, amount, behavior) { }
 
-        public static string[] PlantNames = { "Берёза", "Ромашка", "Трава" };
+        public static string[] PlantNames1 = { "Берёза", "Ромашка", "Трава" };
+        public static string[] PlantNames2 = { "Клевер", "Ромашка", "Мак" };
+        public static string[] PlantNames3 = { "Кувшинка", "Мох", "Камыш" };
 
         public override void Speak(List<World> animals)
         {
@@ -148,7 +154,9 @@ namespace Я_так_больше_не_могу
     {
         public Insect(string name, int amount, string behavior) : base(name, amount, behavior) { }
 
-        public static string[] InsectNames = { "Пчела", "Клещ", "Муравей" };
+        public static string[] InsectNames1 = { "Пчела", "Клещ", "Муравей" };
+        public static string[] InsectNames2 = { "Пчела", "Бабочка", "Кузнечик" };
+        public static string[] InsectNames3 = { "Комар", "Жук", "Стрекоза" };
 
         public override void Speak(List<World> animals)
         {

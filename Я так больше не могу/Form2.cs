@@ -28,7 +28,7 @@ namespace Я_так_больше_не_могу
 
             string selectedZone = ZoneComb.SelectedItem.ToString();
             Form1 form1 = new Form1(selectedZone);
-            form1.FormClosed += (s, args) => this.Show(); // Показать Form2 при закрытии Form1
+            form1.FormClosed += (s, args) => this.Show();
             this.Hide();
             form1.Show();
         }
