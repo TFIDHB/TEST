@@ -100,7 +100,7 @@ namespace Я_так_больше_не_могу
 
         public static string[] HerbivoreNames1 = { "Олень", "Заяц", "Лось" };
         public static string[] HerbivoreNames2 = { "Белка", "Кролик", "Мышь" };
-        public static string[] HerbivoreNames3 = { "Черепаха", "Мышь", "Бобр" };
+        public static string[] HerbivoreNames3 = { "Ондатра", "Мышь", "Бобр" };
 
         public override void Speak(List<World> animals)
         {
@@ -156,7 +156,7 @@ namespace Я_так_больше_не_могу
 
         public static string[] InsectNames1 = { "Пчела", "Клещ", "Муравей" };
         public static string[] InsectNames2 = { "Пчела", "Бабочка", "Кузнечик" };
-        public static string[] InsectNames3 = { "Водомерка", "Жук", "Стрекоза" };
+        public static string[] InsectNames3 = { "Комар", "Жук", "Стрекоза" };
 
         public override void Speak(List<World> animals)
         {
