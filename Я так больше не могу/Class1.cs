@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Я_так_больше_не_могу
 {
@@ -48,9 +49,11 @@ namespace Я_так_больше_не_могу
                         int hunted = Math.Min(preyAmount, animal.Amount);
 
                         animal.Amount -= hunted;
-                        Amount += hunted;
+                        int increase = new Random().Next(1, hunted + 1);
+                        Amount += increase;
 
                         Console.WriteLine($"{Name} охотится на {animal.Name}. Количество {animal.Name}: {animal.Amount}");
+                        Console.WriteLine($"Популяция {Name} увеличилась на {increase}. Текущее количество: {Amount}");
 
                         if (animal.Amount > 0)
                         {
@@ -74,9 +77,11 @@ namespace Я_так_больше_не_могу
                         int eaten = Math.Min(preyAmount, animal.Amount);
 
                         animal.Amount -= eaten;
-                        Amount += eaten;
+                        int increase = new Random().Next(1, eaten + 1);
+                        Amount += increase;
 
                         Console.WriteLine($"{Name} питается {animal.Name}. Количество {animal.Name}: {animal.Amount}");
+                        Console.WriteLine($"Популяция {Name} увеличилась на {increase}. Текущее количество: {Amount}");
                     }
                 }
             }
@@ -105,9 +110,11 @@ namespace Я_так_больше_не_могу
                         int eaten = Math.Min(preyAmount, animal.Amount);
 
                         animal.Amount -= eaten;
-                        Amount += eaten;
+                        int increase = new Random().Next(1, eaten + 1);
+                        Amount += increase;
 
                         Console.WriteLine($"{Name} питается {animal.Name}. Количество {animal.Name}: {animal.Amount}");
+                        Console.WriteLine($"Популяция {Name} увеличилась на {increase}. Текущее количество: {Amount}");
                     }
                 }
             }
@@ -158,9 +165,11 @@ namespace Я_так_больше_не_могу
                         int parasitized = Math.Min(preyAmount, animal.Amount);
 
                         animal.Amount -= parasitized;
-                        Amount += parasitized;
+                        int increase = new Random().Next(1, parasitized + 1);
+                        Amount += increase;
 
                         Console.WriteLine($"{Name} паразитирует на {animal.Name}. Количество {animal.Name}: {animal.Amount}");
+                        Console.WriteLine($"Популяция {Name} увеличилась на {increase}. Текущее количество: {Amount}");
                     }
                 }
             }
@@ -174,9 +183,11 @@ namespace Я_так_больше_не_могу
                         int pollinated = Math.Min(preyAmount, animal.Amount);
 
                         animal.Amount += pollinated;
-                        Amount += pollinated;
+                        int increase = new Random().Next(1, pollinated + 1);
+                        Amount += increase;
 
                         Console.WriteLine($"{Name} питается/опыляет {animal.Name}. Количество {animal.Name}: {animal.Amount}");
+                        Console.WriteLine($"Популяция {Name} увеличилась на {increase}. Текущее количество: {Amount}");
                     }
                 }
             }

@@ -119,6 +119,9 @@ namespace Я_так_больше_не_могу
 
         private void Start_Click_1(object sender, EventArgs e)
         {
+            Console.WriteLine("");
+            Console.WriteLine("Начало нового цикла");
+            Console.WriteLine("");
             foreach (var animal in animals)
             {
                 animal.Speak(animals);
@@ -133,7 +136,7 @@ namespace Я_так_больше_не_могу
             {
                 if (control is Label label && label.Name.StartsWith("animalLabel_"))
                 {
-                    string animalName = label.Name.Split('_')[1]; // Изменено на корректное извлечение имени животного
+                    string animalName = label.Name.Split('_')[1];
                     World animal = animals.Find(a => a.Name == animalName);
                     if (animal != null)
                     {
