@@ -12,12 +12,15 @@ namespace Я_так_больше_не_могу
         private List<World> animals = new List<World>();
         private Random random = new Random();
         private List<Rectangle> animalPositions = new List<Rectangle>();
+        public string zone;
 
         public Form1(string selectedZone)
         {
             InitializeComponent();
             AllocConsole();
             SetZoneBackground(selectedZone);
+            zone = selectedZone;
+
         }
 
         private void SetZoneBackground(string zoneName)
@@ -167,7 +170,6 @@ namespace Я_так_больше_не_могу
 
         private void Add_Click(object sender, EventArgs e)
         {
-            // Проверяем, заполнены ли все поля
             if (SpecComb.SelectedItem == null || ClassComb.SelectedItem == null || BehavComb.SelectedItem == null || Num.Value <= 0)
             {
                 MessageBox.Show("Пожалуйста, введите полные данные для добавления объекта!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -210,22 +212,64 @@ namespace Я_так_больше_не_могу
         {
             string selectedClass = ClassComb.SelectedItem.ToString();
             SpecComb.Items.Clear();
+            switch (zone) {
+                case "Смешанный лес":
+                    if (selectedClass == "Хищник")
+                    {
+                        SpecComb.Items.AddRange(Predator.PredatorNames1);
+                    }
+                    else if (selectedClass == "Травоядное")
+                    {
+                        SpecComb.Items.AddRange(Herbivore.HerbivoreNames1);
+                    }
+                    else if (selectedClass == "Растение")
+                    {
+                        SpecComb.Items.AddRange(Plant.PlantNames1);
+                    }
+                    else if (selectedClass == "Насекомое")
+                    {
+                        SpecComb.Items.AddRange(Insect.InsectNames1);
+                    }
+                    break;
 
-            if (selectedClass == "Хищник")
-            {
-                SpecComb.Items.AddRange(Predator.PredatorNames);
-            }
-            else if (selectedClass == "Травоядное")
-            {
-                SpecComb.Items.AddRange(Herbivore.HerbivoreNames);
-            }
-            else if (selectedClass == "Растение")
-            {
-                SpecComb.Items.AddRange(Plant.PlantNames);
-            }
-            else if (selectedClass == "Насекомое")
-            {
-                SpecComb.Items.AddRange(Insect.InsectNames);
+                case "Поляна":
+                    if (selectedClass == "Хищник")
+                    {
+                        SpecComb.Items.AddRange(Predator.PredatorNames2);
+                    }
+                    else if (selectedClass == "Травоядное")
+                    {
+                        SpecComb.Items.AddRange(Herbivore.HerbivoreNames2);
+                    }
+                    else if (selectedClass == "Растение")
+                    {
+                        SpecComb.Items.AddRange(Plant.PlantNames2);
+                    }
+                    else if (selectedClass == "Насекомое")
+                    {
+                        SpecComb.Items.AddRange(Insect.InsectNames2);
+                    }
+                    break;
+
+                case "Болото":
+                    if (selectedClass == "Хищник")
+                    {
+                        SpecComb.Items.AddRange(Predator.PredatorNames3);
+                    }
+                    else if (selectedClass == "Травоядное")
+                    {
+                        SpecComb.Items.AddRange(Herbivore.HerbivoreNames3);
+                    }
+                    else if (selectedClass == "Растение")
+                    {
+                        SpecComb.Items.AddRange(Plant.PlantNames3);
+                    }
+                    else if (selectedClass == "Насекомое")
+                    {
+                        SpecComb.Items.AddRange(Insect.InsectNames3);
+                    }
+                    break;
+
             }
         }
     }
