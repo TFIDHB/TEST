@@ -129,7 +129,7 @@ namespace Я_так_больше_не_могу
             {
                 animal.Speak(animals);
             }
-
+            World.CheckEcosystem(animals);
             UpdateAnimalLabels();
         }
 

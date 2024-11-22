@@ -32,7 +32,64 @@ namespace Я_так_больше_не_могу
                 Console.WriteLine($"{Name} издает звук.");
             }
         }
+
+        public static void CheckEcosystem(List<World> animals)
+        {
+            int predators = animals.Count(a => a is Predator && a.Amount > 0);
+            int herbivores = animals.Count(a => a is Herbivore && a.Amount > 0);
+            int plants = animals.Count(a => a is Plant && a.Amount > 0);
+            int insects = animals.Count(a => a is Insect && a.Amount > 0);
+
+            bool ecosystemInBalance = true;
+
+            if (herbivores == 0 && predators > 0)
+            {
+                Console.WriteLine("ЭКОСИСТЕМА НАРУШЕНА: Хищники уничтожили всех травоядных.");
+                ecosystemInBalance = false;
+            }
+            if (herbivores > 0 && plants == 0)
+            {
+                Console.WriteLine("ЭКОСИСТЕМА НАРУШЕНА: Травоядные уничтожили всю растительность.");
+                ecosystemInBalance = false;
+            }
+            if (plants == 0 && insects > 0)
+            {
+                Console.WriteLine("ЭКОСИСТЕМА НАРУШЕНА: Насекомые уничтожили всю растительность.");
+                ecosystemInBalance = false;
+            }
+            if (predators == 0 && herbivores > 0)
+            {
+                Console.WriteLine("ЭКОСИСТЕМА НАРУШЕНА: Травоядные не регулируются хищниками, что может привести к перенаселению.");
+                ecosystemInBalance = false;
+            }
+
+            if (ecosystemInBalance)
+            {
+                Console.WriteLine("ЭКОСИСТЕМА В НОРМЕ: Все группы животных и растений сбалансированы.");
+            }
+
+            if (!ecosystemInBalance)
+            {
+                if (herbivores == 0 && predators > 0)
+                {
+                    Console.WriteLine("Последствие: Хищники начнут голодать и уменьшаться в количестве.");
+                }
+                if (herbivores > 0 && plants == 0)
+                {
+                    Console.WriteLine("Последствие: Травоядные начнут голодать и уменьшаться в количестве.");
+                }
+                if (plants == 0 && insects > 0)
+                {
+                    Console.WriteLine("Последствие: Насекомые начнут голодать и уменьшаться в количестве.");
+                }
+                if (predators == 0 && herbivores > 0)
+                {
+                    Console.WriteLine("Последствие: Перенаселение травоядных приведет к дефициту пищи и уменьшению их количества.");
+                }
+            }
+        }
     }
+
 
 
     public class Predator : World
