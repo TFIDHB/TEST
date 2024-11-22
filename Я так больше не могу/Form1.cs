@@ -212,7 +212,8 @@ namespace Я_так_больше_не_могу
         {
             string selectedClass = ClassComb.SelectedItem.ToString();
             SpecComb.Items.Clear();
-            switch (zone) {
+            switch (zone)
+            {
                 case "Смешанный лес":
                     if (selectedClass == "Хищник")
                     {
@@ -271,6 +272,21 @@ namespace Я_так_больше_не_могу
                     break;
 
             }
+        }
+
+        private void Clear_Click(object sender, EventArgs e)
+        {
+            animals.Clear();
+            animalPositions.Clear();
+            for (int i = PanelBackground.Controls.Count - 1; i >= 0; i--)
+            {
+                Control control = PanelBackground.Controls[i];
+                if (control is PictureBox || control is Label)
+                {
+                    PanelBackground.Controls.Remove(control);
+                }
+            }
+            Console.WriteLine("Все объекты удалены с формы");
         }
     }
 }

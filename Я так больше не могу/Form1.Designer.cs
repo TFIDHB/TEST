@@ -39,6 +39,7 @@
             label2 = new Label();
             label3 = new Label();
             PanelBackground = new Panel();
+            Clear = new Button();
             ((System.ComponentModel.ISupportInitialize)Num).BeginInit();
             SuspendLayout();
             // 
@@ -47,7 +48,7 @@
             Start.BackColor = Color.NavajoWhite;
             Start.FlatStyle = FlatStyle.Flat;
             Start.Font = new Font("Sitka Small", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            Start.Location = new Point(472, 700);
+            Start.Location = new Point(469, 641);
             Start.Name = "Start";
             Start.Size = new Size(302, 75);
             Start.TabIndex = 0;
@@ -60,7 +61,7 @@
             ClassComb.DropDownStyle = ComboBoxStyle.DropDownList;
             ClassComb.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);
             ClassComb.FormattingEnabled = true;
-            ClassComb.Location = new Point(81, 148);
+            ClassComb.Location = new Point(78, 106);
             ClassComb.Name = "ClassComb";
             ClassComb.Size = new Size(678, 46);
             ClassComb.TabIndex = 1;
@@ -71,7 +72,7 @@
             SpecComb.DropDownStyle = ComboBoxStyle.DropDownList;
             SpecComb.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);
             SpecComb.FormattingEnabled = true;
-            SpecComb.Location = new Point(81, 306);
+            SpecComb.Location = new Point(78, 264);
             SpecComb.Name = "SpecComb";
             SpecComb.Size = new Size(678, 46);
             SpecComb.TabIndex = 2;
@@ -81,7 +82,7 @@
             Add.BackColor = Color.NavajoWhite;
             Add.FlatStyle = FlatStyle.Flat;
             Add.Font = new Font("Sitka Small", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            Add.Location = new Point(81, 700);
+            Add.Location = new Point(78, 641);
             Add.Name = "Add";
             Add.Size = new Size(302, 75);
             Add.TabIndex = 3;
@@ -92,7 +93,7 @@
             // Num
             // 
             Num.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            Num.Location = new Point(81, 575);
+            Num.Location = new Point(78, 533);
             Num.Name = "Num";
             Num.Size = new Size(678, 45);
             Num.TabIndex = 4;
@@ -103,7 +104,7 @@
             BehavComb.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);
             BehavComb.FormattingEnabled = true;
             BehavComb.Items.AddRange(new object[] { "питается", "охотится", "бездействует" });
-            BehavComb.Location = new Point(81, 433);
+            BehavComb.Location = new Point(78, 391);
             BehavComb.Name = "BehavComb";
             BehavComb.Size = new Size(678, 46);
             BehavComb.TabIndex = 5;
@@ -112,7 +113,7 @@
             // 
             ClassLabel.AutoSize = true;
             ClassLabel.Font = new Font("Sitka Small", 18F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            ClassLabel.Location = new Point(81, 79);
+            ClassLabel.Location = new Point(78, 37);
             ClassLabel.Name = "ClassLabel";
             ClassLabel.Size = new Size(134, 52);
             ClassLabel.TabIndex = 7;
@@ -122,7 +123,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Sitka Small", 18F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label1.Location = new Point(81, 220);
+            label1.Location = new Point(78, 178);
             label1.Name = "label1";
             label1.Size = new Size(100, 52);
             label1.TabIndex = 8;
@@ -132,7 +133,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Sitka Small", 18F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label2.Location = new Point(81, 364);
+            label2.Location = new Point(78, 322);
             label2.Name = "label2";
             label2.Size = new Size(240, 52);
             label2.TabIndex = 9;
@@ -142,7 +143,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Sitka Small", 18F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label3.Location = new Point(81, 497);
+            label3.Location = new Point(78, 455);
             label3.Name = "label3";
             label3.Size = new Size(257, 52);
             label3.TabIndex = 10;
@@ -155,12 +156,26 @@
             PanelBackground.Size = new Size(993, 791);
             PanelBackground.TabIndex = 11;
             // 
+            // Clear
+            // 
+            Clear.BackColor = Color.NavajoWhite;
+            Clear.FlatStyle = FlatStyle.Flat;
+            Clear.Font = new Font("Sitka Small", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            Clear.Location = new Point(274, 766);
+            Clear.Name = "Clear";
+            Clear.Size = new Size(302, 75);
+            Clear.TabIndex = 12;
+            Clear.Text = "Очистить";
+            Clear.UseVisualStyleBackColor = false;
+            Clear.Click += Clear_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.PapayaWhip;
             ClientSize = new Size(1878, 874);
+            Controls.Add(Clear);
             Controls.Add(PanelBackground);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -193,5 +208,6 @@
         private Label label2;
         private Label label3;
         private Panel PanelBackground;
+        private Button Clear;
     }
 }
