@@ -19,17 +19,21 @@ namespace Я_так_больше_не_могу
 
         public virtual void Speak(List<World> animals)
         {
-            if (Behavior == "охотится")
+            if (Behavior == "бездействует")
             {
-                Console.WriteLine($"{Name} рычит.");
+                Random random = new Random();
+                int change = random.Next(-2, 3);
+                Amount = Math.Max(0, Amount + change);
+                string action = change > 0 ? "увеличилось" : "уменьшилось";
+                Console.WriteLine($"Количество {Name} {action} на {Math.Abs(change)}. Текущее количество: {Amount}");
             }
-
             else
             {
                 Console.WriteLine($"{Name} издает звук.");
             }
         }
     }
+
 
     public class Predator : World
     {
@@ -41,11 +45,39 @@ namespace Я_так_больше_не_могу
 
         public override void Speak(List<World> animals)
         {
-            if (Behavior == "охотится" && Name != "Медведь")
+            if (Behavior == "охотится" && Name != "Медведь" && Name != "Жаба")
             {
                 foreach (var animal in animals)
                 {
                     if (animal is Herbivore && animal.Amount > 0 && Amount > 0)
+                    {
+                        int preyAmount = new Random().Next(1, Amount + 1);
+                        int hunted = Math.Min(preyAmount, animal.Amount);
+
+                        animal.Amount -= hunted;
+                        int increase = new Random().Next(1, hunted + 1);
+                        Amount += increase;
+
+                        Console.WriteLine($"{Name} охотится на {animal.Name}. Количество {animal.Name}: {animal.Amount}");
+                        Console.WriteLine($"Популяция {Name} увеличилась на {increase}. Текущее количество: {Amount}");
+
+                        if (animal.Amount > 0)
+                        {
+                            string prevBehv = animal.Behavior;
+                            animal.Behavior = "убегает";
+                            animal.Speak(animals);
+
+                            animal.Behavior = prevBehv;
+                            Console.WriteLine($"{animal.Name} возвращается к поведению {animal.Behavior}.");
+                        }
+                    }
+                }
+            }
+            else if (Behavior == "охотится" && Name == "Жаба")
+            {
+                foreach (var animal in animals)
+                {
+                    if (animal is Insect && animal.Amount > 0 && Amount > 0)
                     {
                         int preyAmount = new Random().Next(1, Amount + 1);
                         int hunted = Math.Min(preyAmount, animal.Amount);
@@ -87,12 +119,17 @@ namespace Я_так_больше_не_могу
                     }
                 }
             }
+            else if (Behavior == "бездействует")
+            {
+                base.Speak(animals);
+            }
             else
             {
                 Console.WriteLine($"Поведение {Behavior} невозможно в данном контексте");
             }
         }
     }
+
 
     public class Herbivore : World
     {
@@ -108,7 +145,7 @@ namespace Я_так_больше_не_могу
             {
                 foreach (var animal in animals)
                 {
-                    if (animal is Plant && animal.Amount > 0 && Amount > 0)
+                    if ((animal is Plant || animal is Insect) && animal.Amount > 0 && Amount > 0)
                     {
                         int preyAmount = new Random().Next(1, Amount + 1);
                         int eaten = Math.Min(preyAmount, animal.Amount);
@@ -122,6 +159,7 @@ namespace Я_так_больше_не_могу
                     }
                 }
             }
+
             else if (Behavior == "убегает")
             {
                 int remaining = new Random().Next(1, Amount + 1);
@@ -129,12 +167,18 @@ namespace Я_так_больше_не_могу
                 Amount = remaining;
                 Console.WriteLine($"{Name} убегает. Количество убежавших: {escaped}, оставшееся количество: {Amount}");
             }
+
+            else if (Behavior == "бездействует")
+            {
+                base.Speak(animals);
+            }
             else
             {
                 Console.WriteLine($"Поведение {Behavior} невозможно в данном контексте");
             }
         }
     }
+
 
     public class Plant : World
     {
@@ -146,7 +190,7 @@ namespace Я_так_больше_не_могу
 
         public override void Speak(List<World> animals)
         {
-            Console.WriteLine($"{Name} бездействует");
+            base.Speak(animals);
         }
     }
 
@@ -160,7 +204,7 @@ namespace Я_так_больше_не_могу
 
         public override void Speak(List<World> animals)
         {
-            if (Behavior == "питается" && Name == "Клещ" && Amount > 0)
+            if (Behavior == "питается" && (Name == "Клещ" || Name == "Комар") && Amount > 0)
             {
                 Random rnd = new Random();
                 bool parasiteOnPredator = rnd.Next(0, 2) == 0;
@@ -208,6 +252,48 @@ namespace Я_так_больше_не_могу
                         Console.WriteLine($"{Name} разлагает {animal.Name}");
                     }
                 }
+            }
+
+            else if (Behavior == "убегает")
+            {
+                int remaining = new Random().Next(1, Amount + 1);
+                int escaped = Amount - remaining;
+                Amount = remaining;
+                Console.WriteLine($"{Name} убегает. Количество убежавших: {escaped}, оставшееся количество: {Amount}");
+            }
+
+            else if (Behavior == "охотится" && Name == "Стрекоза")
+            {
+                foreach (var animal in animals)
+                {
+                    if (animal is Insect && animal.Amount > 0 && Amount > 0 && animal.Name != "Стрекоза")
+                    {
+                        int preyAmount = new Random().Next(1, Amount + 1);
+                        int hunted = Math.Min(preyAmount, animal.Amount);
+
+                        animal.Amount -= hunted;
+                        int increase = new Random().Next(1, hunted + 1);
+                        Amount += increase;
+
+                        Console.WriteLine($"{Name} охотится на {animal.Name}. Количество {animal.Name}: {animal.Amount}");
+                        Console.WriteLine($"Популяция {Name} увеличилась на {increase}. Текущее количество: {Amount}");
+
+                        if (animal.Amount > 0)
+                        {
+                            string prevBehv = animal.Behavior;
+                            animal.Behavior = "убегает";
+                            animal.Speak(animals);
+
+                            animal.Behavior = prevBehv;
+                            Console.WriteLine($"{animal.Name} возвращается к поведению {animal.Behavior}.");
+                        }
+                    }
+                }
+            }
+
+            else if (Behavior == "бездействует")
+            {
+                base.Speak(animals);
             }
             else
             {
