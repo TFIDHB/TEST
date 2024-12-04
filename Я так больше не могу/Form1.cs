@@ -129,6 +129,7 @@ namespace Я_так_больше_не_могу
             {
                 animal.Speak(animals);
             }
+            Console.WriteLine("");
             World.CheckEcosystem(animals);
             UpdateAnimalLabels();
         }

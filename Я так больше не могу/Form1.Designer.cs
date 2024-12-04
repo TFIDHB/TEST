@@ -158,7 +158,7 @@
             // 
             // Clear
             // 
-            Clear.BackColor = Color.NavajoWhite;
+            Clear.BackColor = Color.LightPink;
             Clear.FlatStyle = FlatStyle.Flat;
             Clear.Font = new Font("Sitka Small", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
             Clear.Location = new Point(274, 766);

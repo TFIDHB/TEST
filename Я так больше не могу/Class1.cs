@@ -19,7 +19,7 @@ namespace Я_так_больше_не_могу
 
         public virtual void Speak(List<World> animals)
         {
-            if (Behavior == "бездействует")
+            if (Behavior == "бездействует" && Amount != 0)
             {
                 Random random = new Random();
                 int change = random.Next(-2, 3);
@@ -29,12 +29,18 @@ namespace Я_так_больше_не_могу
             }
             else
             {
-                Console.WriteLine($"{Name} издает звук.");
+                Console.WriteLine($"{Name} не имеет заданного поведения.");
             }
         }
 
         public static void CheckEcosystem(List<World> animals)
         {
+            if (animals == null || animals.Count == 0)
+            {
+                Console.WriteLine("ЭКОСИСТЕМА ОТСУТСТВУЕТ: В экосистеме нет объектов.");
+                return;
+            }
+
             int predators = animals.Count(a => a is Predator && a.Amount > 0);
             int herbivores = animals.Count(a => a is Herbivore && a.Amount > 0);
             int plants = animals.Count(a => a is Plant && a.Amount > 0);
@@ -42,22 +48,49 @@ namespace Я_так_больше_не_могу
 
             bool ecosystemInBalance = true;
 
-            if (herbivores == 0 && predators > 0)
+            if (herbivores == 0 && animals.Any(a => a is Herbivore) && predators > 0)
             {
                 Console.WriteLine("ЭКОСИСТЕМА НАРУШЕНА: Хищники уничтожили всех травоядных.");
                 ecosystemInBalance = false;
             }
-            if (herbivores > 0 && plants == 0)
+            else if (herbivores == 0)
+            {
+                Console.WriteLine("В экосистеме отсутствуют травоядные.");
+            }
+
+            if (plants == 0 && animals.Any(a => a is Plant) && herbivores > 0)
             {
                 Console.WriteLine("ЭКОСИСТЕМА НАРУШЕНА: Травоядные уничтожили всю растительность.");
                 ecosystemInBalance = false;
             }
-            if (plants == 0 && insects > 0)
+            else if (plants == 0)
             {
-                Console.WriteLine("ЭКОСИСТЕМА НАРУШЕНА: Насекомые уничтожили всю растительность.");
+                Console.WriteLine("В экосистеме отсутствуют растения.");
+            }
+
+            if (predators == 0 && animals.Any(a => a is Predator))
+            {
+                Console.WriteLine("ЭКОСИСТЕМА НАРУШЕНА: Все хищники уничтожены.");
                 ecosystemInBalance = false;
             }
-            if (predators == 0 && herbivores > 0)
+            else if (predators == 0)
+            {
+                Console.WriteLine("В экосистеме отсутствуют хищники.");
+            }
+
+
+            if ((herbivores > 0 || predators > 0) && insects == 0 && animals.Any(a => a is Insect))
+            {
+                Console.WriteLine("ЭКОСИСТЕМА НАРУШЕНА: Насекомые были уничтожены.");
+                ecosystemInBalance = false;
+            }
+
+            else if (insects == 0)
+            {
+                Console.WriteLine("В экосистеме отсутствуют насекомые.");
+            }
+
+            if (predators == 0 && herbivores > 0 && animals.Any(a => a is Predator))
             {
                 Console.WriteLine("ЭКОСИСТЕМА НАРУШЕНА: Травоядные не регулируются хищниками, что может привести к перенаселению.");
                 ecosystemInBalance = false;
@@ -86,10 +119,13 @@ namespace Я_так_больше_не_могу
                 {
                     Console.WriteLine("Последствие: Перенаселение травоядных приведет к дефициту пищи и уменьшению их количества.");
                 }
+                if (insects == 0 && plants > 0)
+                {
+                    Console.WriteLine("Последствие: Растения погибнут из-за отсутствия опыления.");
+                }
             }
         }
     }
-
 
 
     public class Predator : World
